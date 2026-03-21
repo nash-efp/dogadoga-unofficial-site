@@ -29,7 +29,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
 
     <!-- ターミナル本体 -->
-    <div class="terminal-body p-8 font-mono text-xl leading-relaxed overflow-y-auto" style="max-height: calc(100vh - 80px);">
+    <div id="terminal-body" class="terminal-body p-8 font-mono text-xl leading-relaxed overflow-y-auto" style="max-height: calc(100vh - 80px);">
       <div id="boot-lines" class="space-y-2"></div>
       <div id="cursor-line" class="flex items-center mt-2 hidden">
         <span class="text-neon-green/70 text-xl">root@dua:~#&nbsp;</span>
@@ -44,7 +44,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             src={`${base}/assets/band-photo.jpg`}
             alt="DOGADOGA"
             class="w-full object-cover grayscale contrast-125 brightness-75"
-            style="max-height: min(55vh, 520px); object-position: center top;"
+            style="height: calc(100vh - 50px); max-height: calc(100vh - 50px); object-position: center top;"
           />
           <!-- グラデーションオーバーレイ -->
           <div class="absolute inset-0" style="background: linear-gradient(to bottom, transparent 30%, #0d0d0d 100%);"></div>
@@ -158,6 +158,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     cursorLineEl.classList.remove('hidden');
     await wait(700);
     cursorLineEl.classList.add('hidden');
+    bootLinesEl.classList.add('hidden');
+    // ウェルカム表示時はターミナル枠を外してフルスクリーンに
+    const terminalBody = document.getElementById('terminal-body')!;
+    terminalBody.style.padding = '0';
+    terminalBody.style.maxHeight = '100vh';
     welcomeMsgEl.classList.remove('hidden');
   }
 
