@@ -74,8 +74,58 @@ const members = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="DOGADOGA Underground Archive - ファンによる非公式アーカイブサイト" />
-    <title>D.U.A. | DOGADOGA Underground Archive</title>
+
+    <!-- Primary SEO -->
+    <title>DOGADOGA (ドガドガ) 非公式ファンサイト | D.U.A. Underground Archive</title>
+    <meta name="description" content="DOGADOGAの非公式ファンアーカイブ。ディスコグラフィ、ライブ情報（セットリスト）、メンバー紹介を掲載。江沼郁弥（plenty）、藤原寛（元andymori）らによる東京発のポストパンクバンド。" />
+    <meta name="keywords" content="DOGADOGA, ドガドガ, 江沼郁弥, plenty, 藤原寛, andymori, ポストパンク, インディーロック, 東京, バンド, ライブ, セットリスト, ディスコグラフィ" />
+    <link rel="canonical" href="https://nash-efp.github.io/dogadoga-unofficial-site/" />
+
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nash-efp.github.io/dogadoga-unofficial-site/" />
+    <meta property="og:title" content="DOGADOGA (ドガドガ) 非公式ファンサイト | D.U.A." />
+    <meta property="og:description" content="DOGADOGAの非公式ファンアーカイブ。ディスコグラフィ、ライブ情報（セットリスト）、メンバー紹介を掲載。" />
+    <meta property="og:image" content="https://nash-efp.github.io/dogadoga-unofficial-site/assets/band-photo.jpg" />
+    <meta property="og:image:width" content="400" />
+    <meta property="og:image:height" content="274" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:site_name" content="D.U.A. — DOGADOGA Underground Archive" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@DOGA_BAND" />
+    <meta name="twitter:title" content="DOGADOGA (ドガドガ) 非公式ファンサイト | D.U.A." />
+    <meta name="twitter:description" content="DOGADOGAの非公式ファンアーカイブ。ディスコグラフィ、ライブ情報（セットリスト）、メンバー紹介を掲載。" />
+    <meta name="twitter:image" content="https://nash-efp.github.io/dogadoga-unofficial-site/assets/band-photo.jpg" />
+
+    <!-- JSON-LD: MusicGroup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MusicGroup",
+      "name": "DOGADOGA",
+      "alternateName": "ドガドガ",
+      "url": "https://nash-efp.github.io/dogadoga-unofficial-site/",
+      "image": "https://nash-efp.github.io/dogadoga-unofficial-site/assets/band-photo.jpg",
+      "description": "江沼郁弥（plenty）を中心に2023年に結成された東京発のバンド。ポストパンク／ノーウェイヴを軸に、ラテン・アフロ・ダブ・歌謡を飲み込んだカオティックなサウンド。",
+      "genre": ["Post-Punk", "No Wave", "Indie Rock"],
+      "foundingDate": "2023",
+      "foundingLocation": {
+        "@type": "Place",
+        "name": "東京",
+        "addressCountry": "JP"
+      },
+      "member": [
+        {"@type": "OrganizationRole", "member": {"@type": "Person", "name": "江沼郁弥"}, "roleName": "Vocals / Guitar"},
+        {"@type": "OrganizationRole", "member": {"@type": "Person", "name": "藤原寛"}, "roleName": "Bass"},
+        {"@type": "OrganizationRole", "member": {"@type": "Person", "name": "渡邊恭一"}, "roleName": "Saxophone / Clarinet / Flute"},
+        {"@type": "OrganizationRole", "member": {"@type": "Person", "name": "古市健太"}, "roleName": "Drums"}
+      ],
+      "sameAs": ["https://x.com/DOGA_BAND"]
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
@@ -318,8 +368,16 @@ const members = [
                 <p class="text-gray-500 text-lg mb-2">{m.data.outlet}</p>
                 {m.data.description && <p class="text-gray-600 text-lg leading-relaxed mb-2">{m.data.description}</p>}
                 {m.data.url && (
-                  <a href={m.data.url} target="_blank" rel="noopener noreferrer" class="text-cyber-pink/50 hover:text-cyber-pink underline underline-offset-2 transition-colors text-base break-all" style="color:#ff00ff; opacity:0.5;">
-                    {m.data.url}
+                  <a
+                    href={m.data.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-block mt-1 border border-cyber-pink/30 px-3 py-1 text-sm tracking-widest uppercase transition-colors duration-150 hover:border-cyber-pink"
+                    style="color:#ff00ff; opacity:0.6;"
+                    onmouseover="this.style.opacity='1'"
+                    onmouseout="this.style.opacity='0.6'"
+                  >
+                    → 記事を読む
                   </a>
                 )}
               </div>
