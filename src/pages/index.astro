@@ -79,6 +79,7 @@ const members = [
     <title>DOGADOGA (ドガドガ) 非公式ファンサイト | D.U.A. Underground Archive</title>
     <meta name="description" content="DOGADOGAの非公式ファンアーカイブ。ディスコグラフィ、ライブ情報（セットリスト）、メンバー紹介を掲載。江沼郁弥（plenty）、藤原寛（元andymori）らによる東京発のポストパンクバンド。" />
     <meta name="keywords" content="DOGADOGA, ドガドガ, 江沼郁弥, plenty, 藤原寛, andymori, ポストパンク, インディーロック, 東京, バンド, ライブ, セットリスト, ディスコグラフィ" />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://nash-efp.github.io/dogadoga-unofficial-site/" />
 
     <!-- OGP -->
@@ -126,8 +127,47 @@ const members = [
     }
     </script>
 
+    <!-- JSON-LD: MusicAlbum (ディスコグラフィ) -->
+    <script type="application/ld+json" set:html={JSON.stringify(discography.map(d => ({
+      "@context": "https://schema.org",
+      "@type": "MusicAlbum",
+      "name": d.data.title,
+      "byArtist": { "@type": "MusicGroup", "name": "DOGADOGA" },
+      "datePublished": d.data.date,
+      "albumProductionType": "StudioAlbum",
+      "numTracks": d.data.tracks?.length ?? 0,
+      ...(d.data.tracks ? { "track": d.data.tracks.map((t, i) => ({ "@type": "MusicRecording", "name": t, "position": i + 1 })) } : {}),
+    })))} />
+
+    <!-- JSON-LD: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "D.U.A. DOGADOGA Underground Archive",
+          "item": "https://nash-efp.github.io/dogadoga-unofficial-site/"
+        }
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD: WebSite (サイト検索ボックス候補) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "D.U.A. — DOGADOGA Underground Archive",
+      "url": "https://nash-efp.github.io/dogadoga-unofficial-site/"
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" />
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
     <style>
       body { background-color: #0d0d0d; color: #e0e0e0; }
@@ -214,18 +254,26 @@ const members = [
       <main class="max-w-5xl mx-auto px-8 py-20 space-y-28">
 
         <!-- ABOUT -->
-        <section id="about">
+        <section id="about" aria-label="DOGADOGAについて">
           <h2 class="section-title">ABOUT</h2>
           <div class="mt-8 space-y-6 text-xl leading-loose text-gray-300">
             <p>
-              <span style="color:#39ff14; text-shadow:0 0 8px #39ff14;">DOGADOGA（ドガ）</span>は、<br>
-              江沼郁弥（plenty）を中心に2023年に結成された、東京発のバンド。
+              <span style="color:#39ff14; text-shadow:0 0 8px #39ff14;">DOGADOGA（ドガドガ / ドガ）</span>は、
+              江沼郁弥（plenty）を中心に2023年に結成された東京発のロックバンド。
             </p>
             <p>
-              ポストパンク／ノーウェイヴを軸に、<br>
-              ラテン・アフロ・ダブ・歌謡——<br>
-              あらゆるジャンルを飲み込んだカオティックなサウンドで、<br>
-              日本のロックシーンに突如として現れた。
+              ポストパンク／ノーウェイヴを軸に、ラテン・アフロ・ダブ・歌謡——
+              あらゆるジャンルを飲み込んだカオティックなサウンドで、
+              日本のインディーロックシーンに突如として現れた。
+            </p>
+            <p>
+              元andymoriの藤原寛（Ba.）、渡邊恭一（Sax./Cl./Fl.）、古市健太（Dr.）が揃い、
+              2025年にはDAIZAWA RECORDS / UK.PROJECTへ移籍。
+              1st EP「あっ!」をリリースし、東名阪を中心にライブ活動を展開している。
+            </p>
+            <p class="text-base text-gray-500">
+              このサイトはファンによる非公式アーカイブです。
+              ライブのセットリスト・ディスコグラフィ・メンバー情報をまとめています。
             </p>
           </div>
         </section>
