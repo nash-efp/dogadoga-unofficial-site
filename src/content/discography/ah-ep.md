@@ -3,7 +3,7 @@ title: "あっ!"
 type: "1st EP"
 date: "2025-08-20"
 label: "DAIZAWA RECORDS / UK.PROJECT"
-streaming_url: "https://www.youtube.com/watch?v=YEyZRcLfc9I&list=RDYEyZRcLfc9I&start_radio=1"
+streaming_url: "https://dogadoga.lnk.to/Ah_EP"
 tracks:
   - "消せない!"
   - "マイハウス"
