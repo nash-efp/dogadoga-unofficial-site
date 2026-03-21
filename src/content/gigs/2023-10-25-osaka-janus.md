@@ -1,7 +1,7 @@
 ---
 title: "shu-ha-ri presents「ザツオン21グラム」"
-date: "2024-11-13"
-venue: "新代田 FEVER"
+date: "2023-10-25"
+venue: "大阪 心斎橋 JANUS"
 source: "https://linkmix.co/18732286"
 contributor: "archive"
 ---

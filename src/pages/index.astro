@@ -10,6 +10,13 @@ const videos = [
 const gigs = (await getCollection('gigs')).sort(
   (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
+const gigsByYear: Record<string, typeof gigs> = {};
+for (const g of gigs) {
+  const year = g.data.date.slice(0, 4);
+  if (!gigsByYear[year]) gigsByYear[year] = [];
+  gigsByYear[year].push(g);
+}
+const gigYears = Object.keys(gigsByYear).sort((a, b) => Number(b) - Number(a));
 const discography = (await getCollection('discography')).sort(
   (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
@@ -244,10 +251,7 @@ const members = [
           {['#about', '#members', '#discography', '#videos', '#gigs', '#media'].map((href) => (
             <a
               href={href}
-              class="text-neon-green/70 text-lg uppercase tracking-widest hover:text-neon-green transition-colors duration-150"
-              style="text-shadow: none;"
-              onmouseover="this.style.textShadow='0 0 8px #39ff14'"
-              onmouseout="this.style.textShadow='none'"
+              class="nav-link text-neon-green/70 text-lg uppercase tracking-widest hover:text-neon-green transition-colors duration-150"
             >
               {href.replace('#', '')}
             </a>
@@ -384,18 +388,26 @@ const members = [
 
         <!-- GIGS -->
         <section id="gigs">
-          <h2 class="section-title">GIGS ARCHIVE</h2>
-          <div class="mt-8 space-y-6">
-            {gigs.map((g) => (
-              <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/gigs/${g.slug}`} class="block border-l-2 border-neon-green/40 pl-6 py-4 hover:border-neon-green transition-colors duration-200 group">
-                <p class="text-lg font-mono mb-1" style="color:#39ff14; opacity:0.6;">{g.data.date}</p>
-                <p class="text-2xl font-bold text-white mb-0.5 group-hover:text-neon-green transition-colors">{g.data.title}</p>
-                {g.data.subtitle && <p class="text-gray-400 text-lg mb-1">{g.data.subtitle}</p>}
-                <p class="text-gray-500 text-xl mb-2">{g.data.venue}</p>
-                {g.data.setlist && g.data.setlist.length > 0 && (
-                  <span class="text-sm tracking-widest uppercase" style="color:#39ff14; opacity:0.4;">setlist {g.data.setlist.length}曲</span>
-                )}
-              </a>
+          <div class="flex items-baseline gap-4 mb-0">
+            <h2 class="section-title">GIGS ARCHIVE</h2>
+            <span class="text-gray-600 text-lg tracking-widest">{gigs.length} shows</span>
+          </div>
+          <div class="mt-8 space-y-10">
+            {gigYears.map((year) => (
+              <div>
+                <h3 class="text-xl font-bold tracking-[0.3em] mb-4 pb-2 border-b border-neon-green/20" style="color:#39ff14; opacity:0.5;">{year}</h3>
+                <div class="space-y-2">
+                  {gigsByYear[year].map((g) => (
+                    <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/gigs/${g.slug}`} class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 border-l-2 border-neon-green/30 pl-5 py-3 hover:border-neon-green transition-colors duration-200 group">
+                      <p class="text-base font-mono shrink-0" style="color:#39ff14; opacity:0.5;">{g.data.date.slice(5).replace('-', '/')}</p>
+                      <div class="flex-1 min-w-0">
+                        <p class="text-lg font-bold text-white group-hover:text-neon-green transition-colors leading-snug">{g.data.title}</p>
+                        <p class="text-gray-500 text-base">{g.data.venue}{g.data.setlist && g.data.setlist.length > 0 && <span class="ml-3 text-sm tracking-widest" style="color:#39ff14; opacity:0.4;">▸ {g.data.setlist.length}曲</span>}</p>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </section>
@@ -435,6 +447,9 @@ const members = [
 
       </main>
 
+      <!-- Back to top -->
+      <button id="back-to-top" aria-label="ページ先頭へ" class="fixed bottom-8 right-8 z-30 w-12 h-12 border border-neon-green/40 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 hover:border-neon-green" style="background:#0d0d0d; color:#39ff14; font-size:1.4rem;">↑</button>
+
       <footer class="border-t border-neon-green/10 px-8 py-10 text-center text-gray-600 text-lg">
         <p>D.U.A. — DOGADOGA Underground Archive</p>
         <p class="mt-2 text-base">ファンによる非公式サイトです。公式情報は
@@ -454,4 +469,42 @@ const members = [
     text-shadow: 0 0 8px #39ff14, 0 0 20px #39ff14;
     letter-spacing: 0.15em;
   }
+  .nav-link {
+    text-shadow: none;
+    transition: color 150ms, text-shadow 150ms;
+  }
+  .nav-link:hover,
+  .nav-link.active {
+    color: #39ff14;
+    text-shadow: 0 0 8px #39ff14;
+  }
 </style>
+
+<script>
+  // Back-to-top
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) {
+      btn?.classList.remove('opacity-0', 'pointer-events-none');
+      btn?.classList.add('opacity-100');
+    } else {
+      btn?.classList.add('opacity-0', 'pointer-events-none');
+      btn?.classList.remove('opacity-100');
+    }
+  }, { passive: true });
+  btn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // Nav active state
+  const sections = document.querySelectorAll<HTMLElement>('section[id]');
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>('.nav-link');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+        });
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
