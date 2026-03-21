@@ -1,0 +1,21 @@
+---
+title: "arko lemming × DOGADOGA 2MAN LIVE"
+date: "2025-12-20"
+venue: "柴崎mod（東京都調布市）"
+setlist:
+  - "ハイティーン・ストップ"
+  - "消せない!"
+  - "いふゆーわなだい"
+  - "ドガのテーマ"
+  - "夏の支度"
+  - "PYG"
+  - "マイハウス"
+  - "酩酊世代"
+  - "粋通り"
+  - "たくらんでる"
+  - "ノー・ヴァージン・スーサイド"
+  - "フェイクファー"
+notes: "arko lemmingとの2マンライブ。開場12:30 / 開演13:00。前売¥3,500 / 当日¥4,000（別途ドリンク代）。"
+source: "https://bibonuma.h-p.jp/achievements/20251220.html"
+contributor: "archive"
+---

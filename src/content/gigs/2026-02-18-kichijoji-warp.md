@@ -1,0 +1,20 @@
+---
+title: "WARP 27th Anniversary!! 吉祥寺WARP presents.「OPPOSITE」"
+date: "2026-02-18"
+venue: "吉祥寺 WARP"
+setlist:
+  - "PYG"
+  - "マイハウス"
+  - "消せない!"
+  - "ドガのテーマ"
+  - "粋通り"
+  - "ハイティーン・ストップ"
+  - "酩酊世代"
+  - "ノー・ヴァージン・スーサイド"
+  - "たくらんでる"
+  - "フェイクファー"
+  - "いふゆーわなだい"
+notes: "出演：春ねむり / SuiseiNoboAz / DOGADOGA。開場18:30 / 開演19:00。前売¥3,500 / 当日¥4,000（学割¥1,500）。"
+source: "https://bibonuma.h-p.jp/achievements/20260218.html"
+contributor: "archive"
+---

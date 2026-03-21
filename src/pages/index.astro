@@ -1,0 +1,364 @@
+---
+import Splash from '../components/Splash.astro';
+import VideoEmbed from '../components/VideoEmbed.astro';
+import { getCollection } from 'astro:content';
+
+const videos = [
+  { id: 'W7J-1tAsM0Q', title: '消せない! (Music Video)' },
+];
+
+const gigs = (await getCollection('gigs')).sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+const discography = (await getCollection('discography')).sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+// 全楽曲リスト（重複排除・古いリリース優先）
+const _discByDate = [...discography].sort(
+  (a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime()
+);
+const seenTracks = new Set<string>();
+const songs: { title: string; release: string; releaseType: string; date: string; streaming_url?: string }[] = [];
+for (const d of _discByDate) {
+  for (const rawTrack of d.data.tracks ?? []) {
+    const title = rawTrack.replace(/^Side [AB]: /, '');
+    if (!seenTracks.has(title)) {
+      seenTracks.add(title);
+      songs.push({ title, release: d.data.title, releaseType: d.data.type, date: d.data.date, streaming_url: d.data.streaming_url });
+    }
+  }
+}
+songs.sort((a, b) => a.title.localeCompare(b.title, 'ja'));
+const media = (await getCollection('media')).sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+const members = [
+  {
+    name: '江沼郁弥',
+    nameEn: 'Fumiya Enuma',
+    role: 'Vo. / Gt.',
+    note: 'plenty。2023年に岡山との「自分たちのグルーヴでパンクバンドをやろう」という会話からDOGADOGAとしてのバンドが始動。',
+  },
+  {
+    name: '藤原寛',
+    nameEn: 'Hiroshi Fujiwara',
+    role: 'Ba.',
+    note: '元andymori。唯一無二のグルーヴでバンドの底を支える。',
+  },
+  {
+    name: '渡邊恭一',
+    nameEn: 'Kyoichi Watanabe',
+    role: 'Sax. / Cl. / Fl.',
+    note: '管楽器を自在に操り、バンドにジャズ・フュージョンの香りを加える。',
+  },
+  {
+    name: '古市健太',
+    nameEn: 'Kenta Furuichi',
+    role: 'Dr.',
+    note: 'タイトかつ野性的なドラミングでカオスを制御する。その後plentyにも加入。',
+  },
+  {
+    name: '岡山健二',
+    nameEn: 'Kenji Okayama',
+    role: 'Perc. / Cel. / Tamb. / Pan. / Shaker',
+    note: '江沼とともにバンド結成を発案。多彩な打楽器でバンドのリズムに立体感を与えた。',
+    departed: true,
+  },
+];
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="DOGADOGA Underground Archive - ファンによる非公式アーカイブサイト" />
+    <title>D.U.A. | DOGADOGA Underground Archive</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+    <style>
+      body { background-color: #0d0d0d; color: #e0e0e0; }
+      .neon-green { text-shadow: 0 0 8px #39ff14, 0 0 18px #39ff14; }
+      .neon-pink  { text-shadow: 0 0 8px #ff00ff, 0 0 18px #ff00ff; }
+      .section-divider {
+        border: none;
+        border-top: 1px solid rgba(57,255,20,0.2);
+        margin: 4rem 0;
+      }
+      /* グレインノイズ */
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+        background-size: 128px 128px;
+        opacity: 0.06;
+        pointer-events: none;
+        z-index: 0;
+      }
+    </style>
+  </head>
+  <body class="bg-[#0d0d0d] text-gray-100 min-h-screen font-mono relative">
+    <Splash />
+
+    <div class="relative z-10">
+      <!-- ヘッダー / ロゴ -->
+      <header class="border-b border-neon-green/20 px-8 py-10">
+        <div class="max-w-5xl mx-auto flex flex-col gap-10 w-full">
+          <!-- テキストロゴ -->
+          <div class="flex-1">
+            <p class="text-neon-green/50 text-xl tracking-[0.4em] uppercase mb-1">D.U.A.</p>
+            <h1 class="font-bold tracking-tight leading-none" style="font-size: clamp(5rem, 14vw, 10rem); color:#39ff14; text-shadow: 0 0 15px #39ff14, 0 0 40px #39ff14, 0 0 80px #39ff14;">
+              DOGA<br>DOGA
+            </h1>
+            <p class="text-3xl font-bold mt-4" style="color:#ff00ff; text-shadow: 0 0 8px #ff00ff;">
+              DOGADOGAの秘密基地へようこそ！
+            </p>
+            <p class="text-xl mt-2" style="color:#ff00ff; opacity:0.7;">
+              Underground Archive — ファンによる非公式サイト
+            </p>
+          </div>
+          <!-- バンド写真 -->
+          <div class="w-full">
+            <img
+              src={`${import.meta.env.BASE_URL}assets/band-photo.jpg`}
+              alt="DOGADOGA"
+              class="w-full grayscale contrast-125 brightness-90 border border-neon-green/20"
+            />
+          </div>
+        </div>
+      </header>
+
+      <!-- トップ動画 -->
+      <div class="border-b border-neon-green/10 bg-[#0a0a0a]">
+        <div class="max-w-5xl mx-auto px-8 py-10">
+<div class="flex justify-center">
+            <blockquote class="twitter-tweet" data-theme="dark" data-width="720">
+              <a href="https://twitter.com/DOGA_BAND/status/1705424276248260770"></a>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+      <script async src="https://platform.twitter.com/widgets.js"></script>
+
+      <!-- ナビ -->
+      <nav class="sticky top-0 z-20 bg-[#0d0d0d]/90 backdrop-blur border-b border-neon-green/10 px-8 py-4">
+        <div class="max-w-5xl mx-auto flex flex-wrap gap-6">
+          {['#about', '#members', '#discography', '#songs', '#videos', '#gigs', '#media'].map((href) => (
+            <a
+              href={href}
+              class="text-neon-green/70 text-lg uppercase tracking-widest hover:text-neon-green transition-colors duration-150"
+              style="text-shadow: none;"
+              onmouseover="this.style.textShadow='0 0 8px #39ff14'"
+              onmouseout="this.style.textShadow='none'"
+            >
+              {href.replace('#', '')}
+            </a>
+          ))}
+        </div>
+      </nav>
+
+      <main class="max-w-5xl mx-auto px-8 py-20 space-y-28">
+
+        <!-- ABOUT -->
+        <section id="about">
+          <h2 class="section-title">ABOUT</h2>
+          <div class="mt-8 space-y-6 text-xl leading-loose text-gray-300">
+            <p>
+              <span style="color:#39ff14; text-shadow:0 0 8px #39ff14;">DOGADOGA（ドガ）</span>は、<br>
+              江沼郁弥（plenty）を中心に2023年に結成された、東京発のバンド。
+            </p>
+            <p>
+              ポストパンク／ノーウェイヴを軸に、<br>
+              ラテン・アフロ・ダブ・歌謡——<br>
+              あらゆるジャンルを飲み込んだカオティックなサウンドで、<br>
+              日本のロックシーンに突如として現れた。
+            </p>
+          </div>
+        </section>
+
+        <hr class="section-divider" />
+
+        <!-- MEMBERS -->
+        <section id="members">
+          <h2 class="section-title">MEMBERS</h2>
+          <div class="mt-8 space-y-6">
+            {/* 1列目・2列目：現役メンバー上段 */}
+            <div class="grid sm:grid-cols-2 gap-6">
+              {members.filter(m => !m.departed).slice(0, 2).map((m) => (
+                <div class="border border-neon-green/30 p-6 hover:border-neon-green/70 transition-colors duration-200">
+                  <p class="text-base uppercase tracking-widest mb-1" style="color:#39ff14; opacity:0.6;">{m.role}</p>
+                  <p class="text-3xl font-bold mb-1" style="color:#39ff14; text-shadow:0 0 8px #39ff14;">{m.name}</p>
+                  <p class="text-gray-500 text-lg mb-3">{m.nameEn}</p>
+                  <p class="text-gray-400 text-lg leading-relaxed">{m.note}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* 3列目・4列目：現役メンバー下段 */}
+            <div class="grid sm:grid-cols-2 gap-6">
+              {members.filter(m => !m.departed).slice(2).map((m) => (
+                <div class="border border-neon-green/30 p-6 hover:border-neon-green/70 transition-colors duration-200">
+                  <p class="text-base uppercase tracking-widest mb-1" style="color:#39ff14; opacity:0.6;">{m.role}</p>
+                  <p class="text-3xl font-bold mb-1" style="color:#39ff14; text-shadow:0 0 8px #39ff14;">{m.name}</p>
+                  <p class="text-gray-500 text-lg mb-3">{m.nameEn}</p>
+                  <p class="text-gray-400 text-lg leading-relaxed">{m.note}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* 5番目（最後）：岡山健二（脱退・中央） */}
+            <div class="flex justify-center">
+              <div class="border border-gray-700/50 p-6 opacity-50 w-full sm:w-1/2">
+                <div class="flex items-center gap-3 mb-1">
+                  <p class="text-base uppercase tracking-widest" style="color:#666;">{members.find(m => m.departed)?.role}</p>
+                  <span class="text-xs border border-gray-600 text-gray-500 px-2 py-0.5 tracking-widest">脱退</span>
+                </div>
+                <p class="text-3xl font-bold mb-1" style="color:#555;">{members.find(m => m.departed)?.name}</p>
+                <p class="text-gray-600 text-lg mb-3">{members.find(m => m.departed)?.nameEn}</p>
+                <p class="text-gray-600 text-lg leading-relaxed">{members.find(m => m.departed)?.note}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="section-divider" />
+
+        <!-- DISCOGRAPHY -->
+        <section id="discography">
+          <h2 class="section-title">DISCOGRAPHY</h2>
+          <div class="mt-8 space-y-6">
+            {discography.map((d) => (
+              <div class="border border-cyber-pink/30 p-6 hover:border-cyber-pink/70 transition-colors duration-200">
+                <div class="flex flex-wrap items-baseline gap-4 mb-3">
+                  <span class="text-cyber-pink text-base uppercase tracking-widest" style="color:#ff00ff; text-shadow:0 0 6px #ff00ff;">{d.data.type}</span>
+                  <span class="text-gray-600 text-lg">{d.data.date}</span>
+                  {d.data.label && <span class="text-gray-600 text-base">{d.data.label}</span>}
+                </div>
+                <h3 class="text-4xl font-bold mb-3 text-white">{d.data.title}</h3>
+                {d.data.description && (
+                  <p class="text-gray-400 text-xl mb-4 leading-relaxed">{d.data.description}</p>
+                )}
+                {d.data.tracks && (
+                  <ol class="text-gray-500 text-lg space-y-1 ml-4 list-decimal">
+                    {d.data.tracks.map((t: string) => <li>{t}</li>)}
+                  </ol>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr class="section-divider" />
+
+        <!-- SONGS -->
+        <section id="songs">
+          <h2 class="section-title">SONGS</h2>
+          <p class="text-gray-600 text-lg mt-2 mb-8">{songs.length}曲 — 五十音順</p>
+          <div class="grid sm:grid-cols-2 gap-3">
+            {songs.map((s) => (
+              <div class="border border-neon-green/10 p-4 hover:border-neon-green/40 transition-colors duration-200 flex items-center justify-between gap-4">
+                <div class="min-w-0">
+                  <p class="text-xl font-bold text-white truncate">{s.title}</p>
+                  <p class="text-gray-600 text-sm mt-0.5 truncate">{s.release}</p>
+                </div>
+                {s.streaming_url && (
+                  <a
+                    href={s.streaming_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="shrink-0 border border-neon-green/30 px-3 py-1 text-sm tracking-widest uppercase transition-colors duration-150 hover:border-neon-green hover:text-neon-green"
+                    style="color:#39ff14; opacity:0.6;"
+                    onmouseover="this.style.opacity='1'"
+                    onmouseout="this.style.opacity='0.6'"
+                  >
+                    ▶ 配信
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr class="section-divider" />
+
+        <!-- VIDEOS -->
+        <section id="videos">
+          <h2 class="section-title">VIDEOS</h2>
+          <div class="mt-8 grid md:grid-cols-2 gap-8">
+            {videos.map((v) => (
+              <VideoEmbed videoId={v.id} title={v.title} />
+            ))}
+          </div>
+        </section>
+
+        <hr class="section-divider" />
+
+        <!-- GIGS -->
+        <section id="gigs">
+          <h2 class="section-title">GIGS ARCHIVE</h2>
+          <div class="mt-8 space-y-6">
+            {gigs.map((g) => (
+              <a href={`${import.meta.env.BASE_URL}gigs/${g.slug}`} class="block border-l-2 border-neon-green/40 pl-6 py-4 hover:border-neon-green transition-colors duration-200 group">
+                <p class="text-lg font-mono mb-1" style="color:#39ff14; opacity:0.6;">{g.data.date}</p>
+                <p class="text-2xl font-bold text-white mb-0.5 group-hover:text-neon-green transition-colors">{g.data.title}</p>
+                {g.data.subtitle && <p class="text-gray-400 text-lg mb-1">{g.data.subtitle}</p>}
+                <p class="text-gray-500 text-xl mb-2">{g.data.venue}</p>
+                {g.data.setlist && g.data.setlist.length > 0 && (
+                  <span class="text-sm tracking-widest uppercase" style="color:#39ff14; opacity:0.4;">setlist {g.data.setlist.length}曲</span>
+                )}
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <hr class="section-divider" />
+
+        <!-- MEDIA -->
+        <section id="media">
+          <h2 class="section-title">MEDIA</h2>
+          <div class="mt-8 space-y-4">
+            {media.map((m) => (
+              <div class="border-l-2 border-cyber-pink/40 pl-6 py-4 hover:border-cyber-pink transition-colors duration-200">
+                <div class="flex flex-wrap items-baseline gap-4 mb-2">
+                  <span class="text-base uppercase tracking-widest" style="color:#ff00ff; text-shadow:0 0 6px #ff00ff;">{m.data.media_type}</span>
+                  <span class="text-gray-600 text-lg">{m.data.date}</span>
+                </div>
+                <p class="text-xl font-bold text-white mb-1">{m.data.title}</p>
+                <p class="text-gray-500 text-lg mb-2">{m.data.outlet}</p>
+                {m.data.description && <p class="text-gray-600 text-lg leading-relaxed mb-2">{m.data.description}</p>}
+                {m.data.url && (
+                  <a href={m.data.url} target="_blank" rel="noopener noreferrer" class="text-cyber-pink/50 hover:text-cyber-pink underline underline-offset-2 transition-colors text-base break-all" style="color:#ff00ff; opacity:0.5;">
+                    {m.data.url}
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+
+      </main>
+
+      <footer class="border-t border-neon-green/10 px-8 py-10 text-center text-gray-600 text-lg">
+        <p>D.U.A. — DOGADOGA Underground Archive</p>
+        <p class="mt-2 text-base">ファンによる非公式サイトです。公式情報は
+          <a href="https://x.com/DOGA_BAND" target="_blank" rel="noopener noreferrer" class="text-neon-green/50 hover:text-neon-green underline" style="color:#39ff14; opacity:0.5;">@DOGA_BAND</a>
+          をご確認ください。
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
+
+<style>
+  .section-title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #39ff14;
+    text-shadow: 0 0 8px #39ff14, 0 0 20px #39ff14;
+    letter-spacing: 0.15em;
+  }
+</style>
