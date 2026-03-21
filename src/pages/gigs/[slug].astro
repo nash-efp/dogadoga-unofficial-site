@@ -42,7 +42,7 @@ const { Content } = await gig.render();
     <div class="relative z-10 max-w-3xl mx-auto px-8 py-16">
 
       <!-- 戻るリンク -->
-      <a href={`${import.meta.env.BASE_URL}#gigs`} class="text-neon-green/50 hover:text-neon-green text-base tracking-widest uppercase transition-colors duration-150 mb-12 inline-block"
+      <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/#gigs`} class="text-neon-green/50 hover:text-neon-green text-base tracking-widest uppercase transition-colors duration-150 mb-12 inline-block"
         style="color:#39ff14; opacity:0.5;"
         onmouseover="this.style.opacity='1'"
         onmouseout="this.style.opacity='0.5'"

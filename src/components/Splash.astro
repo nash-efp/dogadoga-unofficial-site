@@ -1,5 +1,6 @@
 ---
 // Splash.astro - ターミナル風起動演出
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <div id="splash-screen" class="fixed inset-0 z-50 bg-[#0d0d0d] flex items-center justify-center overflow-hidden">
@@ -32,7 +33,7 @@
         <!-- バンド写真：全幅ヒーロー -->
         <div class="relative w-full">
           <img
-            src="/assets/band-photo.jpg"
+            src={`${base}/assets/band-photo.jpg`}
             alt="DOGADOGA"
             class="w-full object-cover grayscale contrast-125 brightness-75"
             style="max-height: 520px; object-position: center top;"
