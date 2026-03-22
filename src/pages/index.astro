@@ -179,8 +179,8 @@ const members = [
     <style>
       html, body { overflow-x: hidden; max-width: 100%; }
       body { background-color: #0d0d0d; color: #e0e0e0; }
-      .neon-green { text-shadow: 0 0 8px #39ff14, 0 0 18px #39ff14; }
-      .neon-pink  { text-shadow: 0 0 8px #ff00ff, 0 0 18px #ff00ff; }
+      .neon-green { text-shadow: 0 0 6px #39ff14; }
+      .neon-pink  { text-shadow: 0 0 6px #ff00ff; }
       .section-divider {
         border: none;
         border-top: 1px solid rgba(57,255,20,0.2);
@@ -208,14 +208,14 @@ const members = [
         <div class="max-w-5xl mx-auto flex flex-col gap-10 w-full">
           <!-- テキストロゴ -->
           <div class="flex-1">
-            <p class="text-neon-green/50 text-xl tracking-[0.4em] uppercase mb-1">D.U.A.</p>
-            <h1 class="font-bold tracking-tight leading-none" style="font-size: clamp(5rem, 14vw, 10rem); color:#39ff14; text-shadow: 0 0 15px #39ff14, 0 0 40px #39ff14, 0 0 80px #39ff14;">
+            <p class="text-neon-green/70 text-xl tracking-[0.4em] uppercase mb-1">D.U.A.</p>
+            <h1 class="font-bold tracking-tight leading-none" style="font-size: clamp(5rem, 14vw, 10rem); color:#39ff14; text-shadow: 0 0 12px #39ff14, 0 0 30px #39ff14;">
               DOGA<br>DOGA
             </h1>
-            <p class="text-3xl font-bold mt-4" style="color:#ff00ff; text-shadow: 0 0 8px #ff00ff;">
+            <p class="text-3xl font-bold mt-4" style="color:#ff00ff; text-shadow: 0 0 6px #ff00ff;">
               DOGADOGAの秘密基地へようこそ！
             </p>
-            <p class="text-xl mt-2" style="color:#ff00ff; opacity:0.7;">
+            <p class="text-xl mt-2" style="color:#ff00ff; opacity:0.85;">
               Underground Archive — ファンによる非公式サイト
             </p>
           </div>
@@ -252,7 +252,7 @@ const members = [
           {['#about', '#members', '#discography', '#videos', '#gigs', '#media'].map((href) => (
             <a
               href={href}
-              class="nav-link text-neon-green/70 text-lg uppercase tracking-widest hover:text-neon-green transition-colors duration-150"
+              class="nav-link text-neon-green/90 text-lg uppercase tracking-widest hover:text-neon-green transition-colors duration-150"
             >
               {href.replace('#', '')}
             </a>
@@ -293,8 +293,8 @@ const members = [
             <div class="grid sm:grid-cols-2 gap-6">
               {members.filter(m => !m.departed).slice(0, 2).map((m) => (
                 <div class="border border-neon-green/30 p-6 hover:border-neon-green/70 transition-colors duration-200">
-                  <p class="text-base uppercase tracking-widest mb-1" style="color:#39ff14; opacity:0.6;">{m.role}</p>
-                  <p class="text-3xl font-bold mb-1" style="color:#39ff14; text-shadow:0 0 8px #39ff14;">{m.name}</p>
+                  <p class="text-base uppercase tracking-widest mb-1" style="color:#39ff14; opacity:0.85;">{m.role}</p>
+                  <p class="text-3xl font-bold mb-1" style="color:#39ff14; text-shadow:0 0 5px #39ff14;">{m.name}</p>
                   <p class="text-gray-500 text-lg mb-3">{m.nameEn}</p>
                   <p class="text-gray-400 text-lg leading-relaxed">{m.note}</p>
                 </div>
@@ -305,8 +305,8 @@ const members = [
             <div class="grid sm:grid-cols-2 gap-6">
               {members.filter(m => !m.departed).slice(2).map((m) => (
                 <div class="border border-neon-green/30 p-6 hover:border-neon-green/70 transition-colors duration-200">
-                  <p class="text-base uppercase tracking-widest mb-1" style="color:#39ff14; opacity:0.6;">{m.role}</p>
-                  <p class="text-3xl font-bold mb-1" style="color:#39ff14; text-shadow:0 0 8px #39ff14;">{m.name}</p>
+                  <p class="text-base uppercase tracking-widest mb-1" style="color:#39ff14; opacity:0.85;">{m.role}</p>
+                  <p class="text-3xl font-bold mb-1" style="color:#39ff14; text-shadow:0 0 5px #39ff14;">{m.name}</p>
                   <p class="text-gray-500 text-lg mb-3">{m.nameEn}</p>
                   <p class="text-gray-400 text-lg leading-relaxed">{m.note}</p>
                 </div>
@@ -337,7 +337,7 @@ const members = [
             {discography.map((d) => (
               <div class="border border-cyber-pink/30 p-6 hover:border-cyber-pink/70 transition-colors duration-200">
                 <div class="flex flex-wrap items-baseline gap-4 mb-3">
-                  <span class="text-cyber-pink text-base uppercase tracking-widest" style="color:#ff00ff; text-shadow:0 0 6px #ff00ff;">{d.data.type}</span>
+                  <span class="text-cyber-pink text-base uppercase tracking-widest" style="color:#ff00ff; text-shadow:0 0 4px #ff00ff;">{d.data.type}</span>
                   <span class="text-gray-600 text-lg">{d.data.date}</span>
                   {d.data.label && <span class="text-gray-600 text-base">{d.data.label}</span>}
                 </div>
@@ -396,14 +396,14 @@ const members = [
           <div class="mt-8 space-y-10">
             {gigYears.map((year) => (
               <div>
-                <h3 class="text-xl font-bold tracking-[0.3em] mb-4 pb-2 border-b border-neon-green/20" style="color:#39ff14; opacity:0.5;">{year}</h3>
+                <h3 class="text-xl font-bold tracking-[0.3em] mb-4 pb-2 border-b border-neon-green/20" style="color:#39ff14; opacity:0.8;">{year}</h3>
                 <div class="space-y-2">
                   {gigsByYear[year].map((g) => (
                     <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/gigs/${g.slug}`} class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 border-l-2 border-neon-green/30 pl-5 py-3 hover:border-neon-green transition-colors duration-200 group">
-                      <p class="text-base font-mono shrink-0" style="color:#39ff14; opacity:0.5;">{g.data.date.slice(5).replace('-', '/')}</p>
+                      <p class="text-base font-mono shrink-0" style="color:#39ff14; opacity:0.8;">{g.data.date.slice(5).replace('-', '/')}</p>
                       <div class="flex-1 min-w-0">
                         <p class="text-lg font-bold text-white group-hover:text-neon-green transition-colors leading-snug">{g.data.title}</p>
-                        <p class="text-gray-500 text-base">{g.data.venue}{g.data.setlist && g.data.setlist.length > 0 && <span class="ml-3 text-sm tracking-widest" style="color:#39ff14; opacity:0.4;">▸ {g.data.setlist.length}曲</span>}</p>
+                        <p class="text-gray-500 text-base">{g.data.venue}{g.data.setlist && g.data.setlist.length > 0 && <span class="ml-3 text-sm tracking-widest" style="color:#39ff14; opacity:0.65;">▸ {g.data.setlist.length}曲</span>}</p>
                       </div>
                     </a>
                   ))}
@@ -422,7 +422,7 @@ const members = [
             {media.map((m) => (
               <div class="border-l-2 border-cyber-pink/40 pl-6 py-4 hover:border-cyber-pink transition-colors duration-200">
                 <div class="flex flex-wrap items-baseline gap-4 mb-2">
-                  <span class="text-base uppercase tracking-widest" style="color:#ff00ff; text-shadow:0 0 6px #ff00ff;">{m.data.media_type}</span>
+                  <span class="text-base uppercase tracking-widest" style="color:#ff00ff; text-shadow:0 0 4px #ff00ff;">{m.data.media_type}</span>
                   <span class="text-gray-600 text-lg">{m.data.date}</span>
                 </div>
                 <p class="text-xl font-bold text-white mb-1">{m.data.title}</p>
@@ -454,7 +454,7 @@ const members = [
       <footer class="border-t border-neon-green/10 px-8 py-10 text-center text-gray-600 text-lg">
         <p>D.U.A. — DOGADOGA Underground Archive</p>
         <p class="mt-2 text-base">ファンによる非公式サイトです。公式情報は
-          <a href="https://x.com/DOGA_BAND" target="_blank" rel="noopener noreferrer" class="text-neon-green/50 hover:text-neon-green underline" style="color:#39ff14; opacity:0.5;">@DOGA_BAND</a>
+          <a href="https://x.com/DOGA_BAND" target="_blank" rel="noopener noreferrer" class="text-neon-green/50 hover:text-neon-green underline" style="color:#39ff14; opacity:0.75;">@DOGA_BAND</a>
           をご確認ください。
         </p>
       </footer>
@@ -467,7 +467,7 @@ const members = [
     font-size: 3rem;
     font-weight: bold;
     color: #39ff14;
-    text-shadow: 0 0 8px #39ff14, 0 0 20px #39ff14;
+    text-shadow: 0 0 6px #39ff14;
     letter-spacing: 0.15em;
   }
   .nav-link {
@@ -477,7 +477,7 @@ const members = [
   .nav-link:hover,
   .nav-link.active {
     color: #39ff14;
-    text-shadow: 0 0 8px #39ff14;
+    text-shadow: 0 0 6px #39ff14;
   }
 </style>
 
